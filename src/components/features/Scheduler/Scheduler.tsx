@@ -6,15 +6,16 @@ import Container from "@material-ui/core/Container";
 
 import styles from "./Scheduler.module.css";
 import { TopMenu } from "../../UI/TopMenu/TopMenu";
+import { WeekCalendar } from "../../UI/WeekCalendar/WeekCalendar";
+import Paper from "@material-ui/core/Paper";
 
 export const Scheduler = () => {
   return (
     <Container>
       <TopMenu />
-
-      <Card raised={true} className={styles.calendar}>
-        <p>calendar goes here</p>
-      </Card>
+      <Paper elevation={24} className={styles.calendar}>
+        <WeekCalendar />
+      </Paper>
     </Container>
   );
 };

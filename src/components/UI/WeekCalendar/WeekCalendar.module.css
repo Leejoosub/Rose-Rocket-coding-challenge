@@ -1,0 +1,4 @@
+.weekCalendarContainer {
+  display: flex;
+  flex-direction: row;
+}
