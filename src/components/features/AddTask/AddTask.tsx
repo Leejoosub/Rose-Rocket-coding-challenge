@@ -138,7 +138,8 @@ const AddTask = () => {
   };
 
   const handleOverwrite = () => {
-    if (editTaskType === "update" && updateDetails) dispatch(deleteTask(updateDetails));
+    if (editTaskType === "update" && updateDetails)
+      dispatch(deleteTask(updateDetails));
     dispatch(
       overWriteSchedule({
         week: selectedWeek,
@@ -289,6 +290,7 @@ const AddTask = () => {
             <InputLabel htmlFor="select">Location: </InputLabel>
             <div className={styles.textField}>
               <TextField
+                value={location}
                 onChange={(event) =>
                   dispatch(setAddTaskLocation(event.target.value))
                 }

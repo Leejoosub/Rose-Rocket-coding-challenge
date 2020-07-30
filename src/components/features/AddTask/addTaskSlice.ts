@@ -91,6 +91,7 @@ export const AddTaskSlice = createSlice({
         startHour: number;
         endHour: number;
         showModal: boolean;
+        location: string;
         updateDetails?: taskUpdateDetails;
       }>
     ) => {
@@ -102,6 +103,7 @@ export const AddTaskSlice = createSlice({
         endHour,
         showModal,
         updateDetails,
+        location
       } = action.payload;
       state.editTaskType = taskType;
       state.week = week;
@@ -109,6 +111,7 @@ export const AddTaskSlice = createSlice({
       state.startHour = startHour;
       state.endHour = endHour;
       state.showModal = showModal;
+      state.location = location;
       if (taskType === "update" && updateDetails)
         state.updateDetails = updateDetails;
     },

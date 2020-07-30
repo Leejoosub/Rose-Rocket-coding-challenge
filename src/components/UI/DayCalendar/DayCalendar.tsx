@@ -21,6 +21,7 @@ import {
 
 import { setAddTaskShowModal } from "../../features/AddTask/addTaskSlice";
 import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
+import { Tasks } from "../../../models/Schedule/ScheduleModel";
 
 interface DayCalendarProps {
   label: string;
@@ -35,6 +36,15 @@ export const DayCalendar = (props: DayCalendarProps) => {
   const schedule = useSelector(selectSchedule);
 
   let hourly: JSX.Element[] = [];
+  const cardContent = (task: Tasks, location: string) => {
+    return (
+      <div>
+        <div>+ Click For More Details</div>
+        <div>Task: {task}</div>
+        <div className={styles.noWrap}>Location: {location}</div>
+      </div>
+    );
+  };
 
   let emptySchedule = false;
   const dailySchedule = schedule[currentDriver][currentWeek];
@@ -66,17 +76,15 @@ export const DayCalendar = (props: DayCalendarProps) => {
                         day: props.day,
                         startHour: i,
                       },
+                      location: hourlySchedule[i].location,
                     })
                   );
                 }}
               >
-                <div>
-                  <div>+ Click For More Details</div>
-                  <div>Task: {hourlySchedule[i].task}</div>
-                  <div className={styles.noWrap}>
-                    Location: {hourlySchedule[i].location}
-                  </div>
-                </div>
+                {cardContent(
+                  hourlySchedule[i].task,
+                  hourlySchedule[i].location
+                )}
               </HourCard>
             );
           } else {
@@ -105,11 +113,12 @@ export const DayCalendar = (props: DayCalendarProps) => {
                       endHour: hourlySchedule[currStartHour].endHour,
                       showModal: true,
                       updateDetails: updateDetails,
+                      location: hourlySchedule[currStartHour].location,
                     })
                   );
                 }}
               >
-                <div>{currentSchedule.task}</div>
+                {cardContent(currentSchedule.task, currentSchedule.location)}
               </HourCard>
             );
             for (let x = i + 1; x < currentSchedule.endHour - 1; x++) {
@@ -127,6 +136,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                         endHour: hourlySchedule[currStartHour].endHour,
                         showModal: true,
                         updateDetails: updateDetails,
+                        location: hourlySchedule[currStartHour].location,
                       })
                     );
                   }}
@@ -150,6 +160,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                       endHour: hourlySchedule[currStartHour].endHour,
                       showModal: true,
                       updateDetails: updateDetails,
+                      location: hourlySchedule[currStartHour].location,
                     })
                   );
                 }}
@@ -173,6 +184,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                     startHour: i,
                     endHour: i + 1,
                     showModal: true,
+                    location: "",
                   })
                 );
               }}
@@ -196,6 +208,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 startHour: i,
                 endHour: i + 1,
                 showModal: true,
+                location: "",
               })
             );
           }}
