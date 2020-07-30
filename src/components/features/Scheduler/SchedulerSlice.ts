@@ -159,35 +159,6 @@ export const schedulerSlice = createSlice({
         additionalInfo: "",
       };
     },
-    updateTask: (
-      state,
-      action: PayloadAction<{
-        week: number;
-        day: number;
-        startHour: number;
-        endHour: number;
-        task: Tasks;
-        location: string;
-        updateDetails: taskUpdateDetails;
-        additionalInfo?: string;
-      }>
-    ) => {
-      const {
-        week,
-        day,
-        startHour,
-        endHour,
-        task,
-        location,
-        //information of the old task
-        updateDetails,
-      } = action.payload;
-
-      //we know it already exists, so we can just delete the existing one first without if statements
-      delete state.Drivers[state.currentDriver][updateDetails.week][
-        updateDetails.day
-      ][updateDetails.startHour];
-    },
     deleteTask: (state, action: PayloadAction<taskUpdateDetails>) => {
       delete state.Drivers[state.currentDriver][action.payload.week][
         action.payload.day
