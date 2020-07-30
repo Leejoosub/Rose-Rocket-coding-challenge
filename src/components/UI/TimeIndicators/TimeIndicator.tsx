@@ -1,20 +1,13 @@
 import React from "react";
 import HourCard from "../HourCard/HourCard/HourCard";
 import styles from "./TimeIndicator.module.css";
+import { convertHours } from "../../../HelperFunctions/convertHours/converthours";
 
 let hourly: JSX.Element[] = [];
 for (let i = 0; i <= 24; i++) {
   hourly.push(
     <HourCard key={i}>
-      <div>
-        {i === 12
-          ? "12pm"
-          : i === 0 || i === 24
-          ? "12am"
-          : i < 12
-          ? `${i}am`
-          : `${i - 12}pm`}
-      </div>
+      <div>{convertHours(i)}</div>
     </HourCard>
   );
 }
