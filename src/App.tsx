@@ -6,6 +6,7 @@ import { Scheduler } from './components/features/Scheduler/Scheduler';
 function App() {
   return (
     <div className="App">
+      {/* jlee delete after */}
       {/* <Counter /> */}
       <Scheduler />
     </div>
