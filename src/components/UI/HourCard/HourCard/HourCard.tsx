@@ -23,8 +23,11 @@ const HourCard = (props: HourcardProps) => {
   }
 
   return (
-    <div className={cardStyle} onClick={props.cardOnPress}>
-      {props.children ? props.children : <p/>}  
+    <div
+      className={[cardStyle, styles.cardContainer].join(" ")}
+      onClick={props.cardOnPress}
+    >
+      {props.children ? props.children : <div />}
     </div>
   );
 };

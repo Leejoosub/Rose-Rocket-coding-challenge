@@ -18,3 +18,7 @@
 .contentContainer {
   padding-top: 101px;
 }
+
+.noWrap {
+  white-space: nowrap;
+}
