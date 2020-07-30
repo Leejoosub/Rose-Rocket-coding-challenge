@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./DayCalendar.module.css";
-import { Card } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import HourCard from "../HourCard/HourCard/HourCard";
 
 interface DayCalendarProps {
@@ -17,12 +17,18 @@ export const DayCalendar = (props: DayCalendarProps) => {
   return (
     <div className={styles.dayContainer}>
       <div className={styles.dayLabel}>
-        
-        <HourCard position="no border">
-          <p>{props.label}</p>
-        </HourCard>
+        <p>
+          <strong>{props.label}</strong>
+        </p>
+        <Button
+          variant="contained"
+          onClick={() => {
+            console.log("add task");
+          }}
+        >{` + Add Task`}</Button>
       </div>
-      {hourly}
+
+      <div className={styles.contentContainer}>{hourly}</div>
     </div>
   );
 };

@@ -1,9 +1,20 @@
 .dayContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .dayLabel {
-  position: relative;
+  position: absolute;
+  top: 0;
+  border: 1px solid black;
+  height: 100px;
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
+
+.contentContainer {
+  padding-top: 101px;
 }
