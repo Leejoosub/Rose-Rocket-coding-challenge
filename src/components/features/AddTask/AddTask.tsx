@@ -18,6 +18,8 @@ import {
   selectAddTaskEndHour,
   selectAddTaskTask,
   selectAddTaskLocation,
+  selectEditTaskType,
+  selectUpdateDetails,
 } from "./addTaskSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -37,6 +39,7 @@ import { Tasks } from "../../../models/Schedule/ScheduleModel";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider } from "@material-ui/core";
 import {
+  deleteTask,
   selectDriver,
   updateSchedule,
   setScheduleConflict,
@@ -62,6 +65,8 @@ const AddTask = () => {
   const scheduleConflict = useSelector(selectScheduleConflict);
   const location = useSelector(selectAddTaskLocation);
   const schedule = useSelector(selectSchedule);
+  const editTaskType = useSelector(selectEditTaskType);
+  const updateDetails = useSelector(selectUpdateDetails);
 
   const [conflictWarning, setConflictWarning] = useState(false);
 
@@ -93,6 +98,12 @@ const AddTask = () => {
     } else setConflictWarning(true);
   };
 
+  const handleUpdate = () => {};
+  const handleDelete = () => {
+    if (updateDetails) dispatch(deleteTask(updateDetails));
+    handleCloseModal();
+  };
+
   const handleOverwrite = () => {
     dispatch(
       overWriteSchedule({
@@ -108,6 +119,44 @@ const AddTask = () => {
     handleCloseModal();
   };
 
+  let modalButton = (
+    <div className={styles.buttonContainer}>
+      <ThemeProvider theme={theme}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <p>Add New Task</p>
+        </Button>
+      </ThemeProvider>
+    </div>
+  );
+  if (editTaskType === "update") {
+    modalButton = (
+      <div className={styles.buttonContainer}>
+        <ThemeProvider theme={theme}>
+          <div className={styles.flexRow}>
+            <div className={styles.buttonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleOverwrite()}
+              >
+                <p>Update Task</p>
+              </Button>
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleDelete}
+              >
+                <p>Delete Task</p>
+              </Button>
+            </div>
+          </div>
+        </ThemeProvider>
+      </div>
+    );
+  }
+
   return (
     <Modal
       open={showModal}
@@ -117,7 +166,11 @@ const AddTask = () => {
       className={styles.modal}
     >
       <div className={styles.modalContent}>
-        <h1>Add A New Task!</h1>
+        {editTaskType === "add" ? (
+          <h1>Add A New Task</h1>
+        ) : editTaskType === "update" ? (
+          <h1>Update Task</h1>
+        ) : null}
         <div className={styles.inputColumn}>
           {/* WEEK SELECTOR */}
           <div className={styles.inputs}>
@@ -210,12 +263,7 @@ const AddTask = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <h1>{conflictWarning}</h1>
-          <ThemeProvider theme={theme}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              <p>Add New Task</p>
-            </Button>
-          </ThemeProvider>
+          {modalButton}
         </div>
         <Modal
           open={conflictWarning}

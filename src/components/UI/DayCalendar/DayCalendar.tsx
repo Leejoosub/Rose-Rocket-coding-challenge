@@ -9,6 +9,8 @@ import {
   selectAddTaskWeek,
   setAddTaskStartHour,
   setAddTaskEndHour,
+  setEditTaskType,
+  setUpdateDetails,
 } from "../../features/AddTask/addTaskSlice";
 import {
   selectWeek,
@@ -17,6 +19,7 @@ import {
 } from "../../features/Scheduler/SchedulerSlice";
 
 import { setAddTaskShowModal } from "../../features/AddTask/addTaskSlice";
+import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
 
 interface DayCalendarProps {
   label: string;
@@ -48,7 +51,20 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 key={props.day + i}
                 position="full"
                 cardOnPress={() => {
-                  console.log("time has been filled 1hour");
+                  dispatch(setEditTaskType("update"));
+                  dispatch(setAddTaskWeek(currentWeek));
+                  dispatch(setAddTaskDay(props.day));
+                  dispatch(setAddTaskStartHour(i));
+                  dispatch(setAddTaskEndHour(i));
+                  dispatch(setAddTaskShowModal(true));
+                  dispatch(
+                    setUpdateDetails({
+                      driver: currentDriver,
+                      week: currentWeek,
+                      day: props.day,
+                      startHour: i,
+                    })
+                  );
                 }}
               >
                 <div>
@@ -61,13 +77,31 @@ export const DayCalendar = (props: DayCalendarProps) => {
               </HourCard>
             );
           } else {
-            const currentSchedule = hourlySchedule[i];
+            const currStartHour = i;
+            const currentSchedule = hourlySchedule[currStartHour];
+
+            //details required for updates
+            const updateDetails: taskUpdateDetails = {
+              driver: currentDriver,
+              week: currentWeek,
+              day: props.day,
+              startHour: currStartHour,
+            };
+
             hourly.push(
               <HourCard
                 key={props.day + i}
                 position="top"
                 cardOnPress={() => {
-                  console.log("time has been filled");
+                  dispatch(setEditTaskType("update"));
+                  dispatch(setAddTaskWeek(currentWeek));
+                  dispatch(setAddTaskDay(props.day));
+                  dispatch(setAddTaskStartHour(currStartHour));
+                  dispatch(
+                    setAddTaskEndHour(hourlySchedule[currStartHour].endHour)
+                  );
+                  dispatch(setAddTaskShowModal(true));
+                  dispatch(setUpdateDetails(updateDetails));
                 }}
               >
                 <div>{currentSchedule.task}</div>
@@ -79,7 +113,13 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   key={"" + i + x + props.day}
                   position="mid"
                   cardOnPress={() => {
-                    console.log("time has been filled mid");
+                    dispatch(setEditTaskType("update"));
+                    dispatch(setAddTaskWeek(currentWeek));
+                    dispatch(setAddTaskDay(props.day));
+                    dispatch(setAddTaskStartHour(currStartHour));
+                    dispatch(setAddTaskEndHour(currentSchedule.endHour));
+                    dispatch(setAddTaskShowModal(true));
+                    dispatch(setUpdateDetails(updateDetails));
                   }}
                 />
               );
@@ -92,7 +132,13 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 key={props.day + i + 1}
                 position="bot"
                 cardOnPress={() => {
-                  console.log("time has been filled bot");
+                  dispatch(setEditTaskType("update"));
+                  dispatch(setAddTaskWeek(currentWeek));
+                  dispatch(setAddTaskDay(props.day));
+                  dispatch(setAddTaskStartHour(currStartHour));
+                  dispatch(setAddTaskEndHour(currentSchedule.endHour));
+                  dispatch(setAddTaskShowModal(true));
+                  dispatch(setUpdateDetails(updateDetails));
                 }}
               />
             );
@@ -106,6 +152,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
             <HourCard
               key={i + props.day}
               cardOnPress={() => {
+                dispatch(setEditTaskType("add"));
                 dispatch(setAddTaskWeek(currentWeek));
                 dispatch(setAddTaskDay(props.day));
                 dispatch(setAddTaskStartHour(i));
@@ -124,6 +171,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
         <HourCard
           key={i}
           cardOnPress={() => {
+            dispatch(setEditTaskType("add"));
             dispatch(setAddTaskWeek(currentWeek));
             dispatch(setAddTaskDay(props.day));
             dispatch(setAddTaskStartHour(i));
