@@ -8,12 +8,20 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 
 import styles from "./TopMenu.module.css";
 import { DRIVER1, DRIVER2, DRIVER3 } from "../../../GlobalVar";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increaseWeek,
+  decreaseWeek,
+  selectWeek
+} from "../../features/Scheduler/SchedulerSlice";
 
 export const TopMenu = () => {
+  const dispatch = useDispatch();
+  const week = useSelector(selectWeek);
   return (
     <div className={styles.topMenu}>
       <div className={styles.pickerContainer}>
-        <InputLabel htmlFor="select">Age</InputLabel>
+        <InputLabel htmlFor="select">Driver</InputLabel>
         <NativeSelect
           className={styles.picker}
           id="select"
@@ -31,12 +39,12 @@ export const TopMenu = () => {
       <div className={styles.pickerContainer}>
         <ArrowBack
           className={styles.icon}
-          onClick={() => console.log("left")}
+          onClick={() => dispatch(decreaseWeek())}
         />
-        <p>Week</p>
+        <p>{`Week ${week}`}</p>
         <ArrowForward
           className={styles.icon}
-          onClick={() => console.log("right")}
+          onClick={() => dispatch(increaseWeek())}
         />
       </div>
 
