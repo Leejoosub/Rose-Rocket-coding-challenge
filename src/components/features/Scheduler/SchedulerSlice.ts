@@ -7,15 +7,17 @@ import {
 import { DRIVER1, DRIVER2, DRIVER3 } from "../../../GlobalVar";
 
 interface SchedulerState {
-  // Drivers: DriversMap;
   Drivers: DriversMap;
   currentWeek: number;
+  currentDriver: string;
+  downloadScheduleLength: number;
 }
 
 const initialState: SchedulerState = {
   Drivers: { [DRIVER1]: {}, [DRIVER2]: {}, [DRIVER3]: {} },
-
+  currentDriver: DRIVER1,
   currentWeek: 1,
+  downloadScheduleLength: 2,
 };
 
 export const schedulerSlice = createSlice({
@@ -30,13 +32,25 @@ export const schedulerSlice = createSlice({
         state.currentWeek -= 1;
       }
     },
+    changeDriver: (state, action: PayloadAction<string>) => {
+      state.currentDriver = action.payload;
+    },
+    changeDownloadSchedule: (state, action: PayloadAction<number>) => {
+      state.downloadScheduleLength = action.payload;
+    },
   },
 });
 
 //ADD ALL ACTIONS HERE
-export const { increaseWeek, decreaseWeek } = schedulerSlice.actions;
+export const {
+  increaseWeek,
+  decreaseWeek,
+  changeDriver,
+  changeDownloadSchedule,
+} = schedulerSlice.actions;
 
 //ADD ALL GET VALUES HERE
 export const selectWeek = (state: RootState) => state.scheduler.currentWeek;
+export const selectDriver = (state: RootState) => state.scheduler.currentDriver;
 
 export default schedulerSlice.reducer;
