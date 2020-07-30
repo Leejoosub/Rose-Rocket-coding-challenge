@@ -4,7 +4,7 @@ import styles from "./TimeIndicator.module.css";
 import { convertHours } from "../../../HelperFunctions/convertHours/converthours";
 
 let hourly: JSX.Element[] = [];
-for (let i = 0; i <= 24; i++) {
+for (let i = 0; i < 24; i++) {
   hourly.push(
     <HourCard key={i}>
       <div>{convertHours(i)}</div>

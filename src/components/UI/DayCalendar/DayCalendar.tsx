@@ -40,19 +40,64 @@ export const DayCalendar = (props: DayCalendarProps) => {
       // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-      for (let i = 0; i <= 24; i++) {
+      for (let i = 0; i < 24; i++) {
         if (hourlySchedule[i]) {
-          hourly.push(
-            <HourCard
-              key={i}
-              position="top"
-              cardOnPress={() => {
-                console.log("time has been filled");
-              }}
-            >
-              <p>{hourlySchedule[i].task}</p>
-            </HourCard>
-          );
+          //if its just a 1 hour schedule
+          if (hourlySchedule[i].endHour === i + 1) {
+            hourly.push(
+              <HourCard
+                key={i}
+                position="full"
+                cardOnPress={() => {
+                  console.log("time has been filled 1hour");
+                }}
+              >
+                <div>{hourlySchedule[i].task}</div>
+              </HourCard>
+            );
+          } else {
+            console.log(hourlySchedule[i]);
+            const currentSchedule = hourlySchedule[i];
+
+            hourly.push(
+              <HourCard
+                key={i}
+                position="top"
+                cardOnPress={() => {
+                  console.log("time has been filled");
+                }}
+              >
+                <div>{currentSchedule.task}</div>
+              </HourCard>
+            );
+            for (let x = i + 1; x < currentSchedule.endHour - 1; x++) {
+              hourly.push(
+                <HourCard
+                  key={i}
+                  position="mid"
+                  cardOnPress={() => {
+                    console.log("time has been filled mid");
+                  }}
+                />
+              );
+              // also want to increase the outter loop by 1 because
+              // we are adding to the schedule
+              i++;
+            }
+            hourly.push(
+              <HourCard
+                key={i}
+                position="bot"
+                cardOnPress={() => {
+                  console.log("time has been filled bot");
+                }}
+              />
+            );
+            // we have to increment for each HourCard we add. we add 1 for the top automatically
+            // the inner for loop adds on its own
+            // need to add 1 more i for the bottom / last HourCard we add
+            i++;
+          }
         } else {
           hourly.push(
             <HourCard
@@ -70,42 +115,8 @@ export const DayCalendar = (props: DayCalendarProps) => {
       }
     } else emptySchedule = true;
   } else emptySchedule = true;
-
-  // const hourlySchedule = schedule[currentDriver][currentWeek][props.day];
-
-  // if (hourlySchedule) {
-  //   // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-  //   // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-  //   // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-  //   for (let i = 0; i <= 24; i++) {
-  //     if (hourlySchedule[i]) {
-  //       hourly.push(
-  //         <HourCard
-  //           key={i}
-  //           position="top"
-  //           cardOnPress={() => {
-  //             console.log("time has been filled");
-  //           }}
-  //         />
-  //       );
-  //     } else {
-  //       hourly.push(
-  //         <HourCard
-  //           key={i}
-  //           cardOnPress={() => {
-  //             dispatch(setAddTaskWeek(currentWeek));
-  //             dispatch(setAddTaskDay(props.day));
-  //             dispatch(setAddTaskStartHour(i));
-  //             dispatch(setAddTaskEndHour(i + 1));
-  //             dispatch(setAddTaskShowModal(true));
-  //           }}
-  //         />
-  //       );
-  //     }
-  //   }
-  // } else {
   if (emptySchedule) {
-    for (let i = 0; i <= 24; i++) {
+    for (let i = 0; i < 24; i++) {
       hourly.push(
         <HourCard
           key={i}
@@ -120,8 +131,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
       );
     }
   }
-
-  // }
 
   return (
     <div className={styles.dayContainer}>

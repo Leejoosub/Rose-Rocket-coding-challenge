@@ -24,7 +24,7 @@ const HourCard = (props: HourcardProps) => {
 
   return (
     <div className={cardStyle} onClick={props.cardOnPress}>
-      {props.children ? props.children : <p/>}  
+      {props.children ? props.children : <div/>}  
     </div>
   );
 };
