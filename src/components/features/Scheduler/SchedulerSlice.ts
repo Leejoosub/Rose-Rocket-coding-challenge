@@ -52,6 +52,7 @@ export const schedulerSlice = createSlice({
         startHour: number;
         endHour: number;
         task: Tasks;
+        location: string;
         additionalInfo?: string;
         forceUpdate?: boolean;
       }>
@@ -87,7 +88,7 @@ export const schedulerSlice = createSlice({
               dayObj[action.payload.startHour] = {
                 endHour: action.payload.endHour,
                 task: action.payload.task as Tasks,
-                location: "",
+                location: action.payload.location,
                 additionalInfo: "",
               };
             }
@@ -97,7 +98,7 @@ export const schedulerSlice = createSlice({
               [action.payload.startHour]: {
                 endHour: action.payload.endHour,
                 task: action.payload.task as Tasks,
-                location: "",
+                location: action.payload.location,
                 additionalInfo: "",
               },
             };
@@ -109,7 +110,7 @@ export const schedulerSlice = createSlice({
               [action.payload.startHour]: {
                 endHour: action.payload.endHour,
                 task: action.payload.task as Tasks,
-                location: "",
+                location: action.payload.location,
                 additionalInfo: "",
               },
             },
@@ -125,6 +126,7 @@ export const schedulerSlice = createSlice({
         startHour: number;
         endHour: number;
         task: Tasks;
+        location: string;
         additionalInfo?: string;
         forceUpdate?: boolean;
       }>
@@ -154,7 +156,7 @@ export const schedulerSlice = createSlice({
       dayObj[action.payload.startHour] = {
         endHour: action.payload.endHour,
         task: action.payload.task as Tasks,
-        location: "",
+        location: action.payload.location,
         additionalInfo: "",
       };
     },

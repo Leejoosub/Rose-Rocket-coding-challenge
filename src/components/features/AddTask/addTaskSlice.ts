@@ -9,6 +9,7 @@ interface AddTaskState {
   day: number;
   startHour: number;
   endHour: number;
+  location: string;
   task: Tasks;
   showModal: boolean;
 }
@@ -20,6 +21,7 @@ const initialState: AddTaskState = {
   endHour: 1,
   task: "other",
   showModal: false,
+  location: "",
 };
 
 export const AddTaskSlice = createSlice({
@@ -55,6 +57,9 @@ export const AddTaskSlice = createSlice({
     setAddTaskShowModal: (state, action: PayloadAction<boolean>) => {
       state.showModal = action.payload;
     },
+    setAddTaskLocation: (state, action: PayloadAction<string>) => {
+      state.location = action.payload;
+    },
   },
 });
 
@@ -66,6 +71,7 @@ export const {
   setAddTaskEndHour,
   setAddTaskTask,
   setAddTaskShowModal,
+  setAddTaskLocation,
 } = AddTaskSlice.actions;
 
 //getters
@@ -77,5 +83,7 @@ export const selectAddTaskEndHour = (state: RootState) => state.addTask.endHour;
 export const selectAddTaskTask = (state: RootState) => state.addTask.task;
 export const selectAddTaskShowModal = (state: RootState) =>
   state.addTask.showModal;
+export const selectAddTaskLocation = (state: RootState) =>
+  state.addTask.location;
 
 export default AddTaskSlice.reducer;

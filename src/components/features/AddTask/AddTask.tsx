@@ -8,6 +8,7 @@ import {
   setAddTaskStartHour,
   setAddTaskTask,
   setAddTaskEndHour,
+  setAddTaskLocation,
 
   //getters
   selectAddTaskShowModal,
@@ -16,11 +17,13 @@ import {
   selectAddTaskStartHour,
   selectAddTaskEndHour,
   selectAddTaskTask,
+  selectAddTaskLocation,
 } from "./addTaskSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
 
 import styles from "./AddTask.module.css";
 import {
@@ -57,6 +60,7 @@ const AddTask = () => {
   const selectedDriver = useSelector(selectDriver);
   const selectedTask = useSelector(selectAddTaskTask);
   const scheduleConflict = useSelector(selectScheduleConflict);
+  const location = useSelector(selectAddTaskLocation);
   const schedule = useSelector(selectSchedule);
 
   const [conflictWarning, setConflictWarning] = useState(false);
@@ -82,6 +86,7 @@ const AddTask = () => {
           startHour: selectedStartHour,
           endHour: selectedEndHour,
           task: selectedTask,
+          location: location,
         })
       );
       handleCloseModal();
@@ -96,6 +101,7 @@ const AddTask = () => {
         startHour: selectedStartHour,
         endHour: selectedEndHour,
         task: selectedTask,
+        location: location,
       })
     );
     setConflictWarning(false);
@@ -191,6 +197,16 @@ const AddTask = () => {
             >
               {taskOptions()}
             </NativeSelect>
+          </div>
+          <div className={styles.inputs}>
+            <InputLabel htmlFor="select">Location: </InputLabel>
+            <div className={styles.textField}>
+              <TextField
+                onChange={(event) =>
+                  dispatch(setAddTaskLocation(event.target.value))
+                }
+              />
+            </div>
           </div>
         </div>
         <div className={styles.buttonContainer}>

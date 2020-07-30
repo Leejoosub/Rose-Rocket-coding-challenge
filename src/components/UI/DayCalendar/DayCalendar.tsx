@@ -51,7 +51,13 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   console.log("time has been filled 1hour");
                 }}
               >
-                <div>{hourlySchedule[i].task}</div>
+                <div>
+                  <div>+ Click For More Details</div>
+                  <div>Task: {hourlySchedule[i].task}</div>
+                  <div className={styles.noWrap}>
+                    Location: {hourlySchedule[i].location}
+                  </div>
+                </div>
               </HourCard>
             );
           } else {
@@ -70,7 +76,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
             for (let x = i + 1; x < currentSchedule.endHour - 1; x++) {
               hourly.push(
                 <HourCard
-                  key={("" + i + x + props.day)}
+                  key={"" + i + x + props.day}
                   position="mid"
                   cardOnPress={() => {
                     console.log("time has been filled mid");

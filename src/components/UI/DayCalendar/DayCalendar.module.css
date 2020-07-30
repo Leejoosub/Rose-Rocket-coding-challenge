@@ -19,7 +19,6 @@
   padding-top: 101px;
 }
 
-/* jlee delete */
-.test{
-  background-color: red;
+.noWrap {
+  white-space: nowrap;
 }
