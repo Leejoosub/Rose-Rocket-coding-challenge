@@ -34,7 +34,7 @@ export const AddTaskSlice = createSlice({
     },
     setAddTaskDay: (state, action: PayloadAction<number>) => {
       const day = action.payload;
-      //0 = sunday, 8 = saturday
+      //0 = sunday, 6 = saturday
       if (day >= 0 && day <= 6) state.day = day;
     },
     setAddTaskStartHour: (state, action: PayloadAction<number>) => {
