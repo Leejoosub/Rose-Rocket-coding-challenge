@@ -129,14 +129,14 @@ const AddTask = () => {
             <NativeSelect
               className={styles.picker}
               id="select"
-              value={selectedStartHour + 1}
+              value={selectedEndHour}
               onChange={(event) => {
                 dispatch(setAddTaskEndHour(parseInt(event.target.value)));
               }}
             >
               {/* if the new selected start time is greater than previously selected end time
               change the end time. if not, dont change */}
-              {hourOptions(selectedEndHour, 24)}
+              {hourOptions(selectedStartHour + 1, 24)}
             </NativeSelect>
           </div>
 
@@ -146,6 +146,7 @@ const AddTask = () => {
             <NativeSelect
               className={styles.picker}
               id="select"
+              value={selectedTask}
               onChange={(event) => {
                 dispatch(setAddTaskTask(event.target.value as Tasks));
               }}
