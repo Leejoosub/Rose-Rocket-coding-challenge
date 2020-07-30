@@ -68,20 +68,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                       },
                     })
                   );
-                  // dispatch(setEditTaskType("update"));
-                  // dispatch(setAddTaskWeek(currentWeek));
-                  // dispatch(setAddTaskDay(props.day));
-                  // dispatch(setAddTaskStartHour(i));
-                  // dispatch(setAddTaskEndHour(i + 1));
-                  // dispatch(setAddTaskShowModal(true));
-                  // dispatch(
-                  //   setUpdateDetails({
-                  //     driver: currentDriver,
-                  //     week: currentWeek,
-                  //     day: props.day,
-                  //     startHour: i,
-                  //   })
-                  // );
                 }}
               >
                 <div>
@@ -121,15 +107,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                       updateDetails: updateDetails,
                     })
                   );
-                  // dispatch(setEditTaskType("update"));
-                  // dispatch(setAddTaskWeek(currentWeek));
-                  // dispatch(setAddTaskDay(props.day));
-                  // dispatch(setAddTaskStartHour(currStartHour));
-                  // dispatch(
-                  //   setAddTaskEndHour(hourlySchedule[currStartHour].endHour)
-                  // );
-                  // dispatch(setAddTaskShowModal(true));
-                  // dispatch(setUpdateDetails(updateDetails));
                 }}
               >
                 <div>{currentSchedule.task}</div>
@@ -152,13 +129,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                         updateDetails: updateDetails,
                       })
                     );
-                    // dispatch(setEditTaskType("update"));
-                    // dispatch(setAddTaskWeek(currentWeek));
-                    // dispatch(setAddTaskDay(props.day));
-                    // dispatch(setAddTaskStartHour(currStartHour));
-                    // dispatch(setAddTaskEndHour(currentSchedule.endHour));
-                    // dispatch(setAddTaskShowModal(true));
-                    // dispatch(setUpdateDetails(updateDetails));
                   }}
                 />
               );
@@ -182,13 +152,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                       updateDetails: updateDetails,
                     })
                   );
-                  // dispatch(setEditTaskType("update"));
-                  // dispatch(setAddTaskWeek(currentWeek));
-                  // dispatch(setAddTaskDay(props.day));
-                  // dispatch(setAddTaskStartHour(currStartHour));
-                  // dispatch(setAddTaskEndHour(currentSchedule.endHour));
-                  // dispatch(setAddTaskShowModal(true));
-                  // dispatch(setUpdateDetails(updateDetails));
                 }}
               />
             );
@@ -212,12 +175,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                     showModal: true,
                   })
                 );
-                // dispatch(setEditTaskType("add"));
-                // dispatch(setAddTaskWeek(currentWeek));
-                // dispatch(setAddTaskDay(props.day));
-                // dispatch(setAddTaskStartHour(i));
-                // dispatch(setAddTaskEndHour(i + 1));
-                // dispatch(setAddTaskShowModal(true));
               }}
             />
           );
@@ -241,12 +198,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 showModal: true,
               })
             );
-            // dispatch(setEditTaskType("add"));
-            // dispatch(setAddTaskWeek(currentWeek));
-            // dispatch(setAddTaskDay(props.day));
-            // dispatch(setAddTaskStartHour(i));
-            // dispatch(setAddTaskEndHour(i + 1));
-            // dispatch(setAddTaskShowModal(true));
           }}
         />
       );

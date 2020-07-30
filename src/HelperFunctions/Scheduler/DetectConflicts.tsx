@@ -88,6 +88,5 @@ export const detectConfictExcludingCurrent = (
       }
     }
   }
-  console.log("conflict?: ", conflict);
   return conflict;
 };

@@ -77,11 +77,9 @@ export const AddTaskSlice = createSlice({
       state.location = action.payload;
     },
     setEditTaskType: (state, action: PayloadAction<editTaskType>) => {
-      console.log("ediut type: ", action.payload);
       state.editTaskType = action.payload;
     },
     setUpdateDetails: (state, action: PayloadAction<taskUpdateDetails>) => {
-      console.log("update details: ", action.payload);
       state.updateDetails = action.payload;
     },
     openTaskModalWithNewValues: (

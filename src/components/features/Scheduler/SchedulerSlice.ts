@@ -189,7 +189,6 @@ export const schedulerSlice = createSlice({
       ][updateDetails.startHour];
     },
     deleteTask: (state, action: PayloadAction<taskUpdateDetails>) => {
-      console.log("delete");
       delete state.Drivers[state.currentDriver][action.payload.week][
         action.payload.day
       ][action.payload.startHour];
