@@ -1,7 +1,7 @@
 import React from 'react';
-import { Counter } from './features/counter/Counter';
+import { Counter } from './components/features/counter/Counter';
 import './App.css';
-import { Scheduler } from './features/Scheduler/Scheduler';
+import { Scheduler } from './components/features/Scheduler/Scheduler';
 
 function App() {
   return (

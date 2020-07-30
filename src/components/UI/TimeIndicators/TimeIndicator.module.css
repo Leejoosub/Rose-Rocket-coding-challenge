@@ -1,0 +1,17 @@
+.dayContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.dayLabel {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+}
+
+.contentContainer{
+  padding-top: 101px;
+}
+

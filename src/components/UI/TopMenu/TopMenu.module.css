@@ -1,0 +1,21 @@
+
+.topMenu {
+  display: flex;
+  flex-direction: row;;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pickerContainer{
+  display: flex;
+  align-items: center;
+}
+
+.picker {
+  margin-left: 10px;
+}
+
+.icon {
+  margin-left: 5px;
+  margin-right: 5px;
+}

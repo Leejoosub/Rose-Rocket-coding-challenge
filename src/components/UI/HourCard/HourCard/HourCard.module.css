@@ -1,0 +1,49 @@
+:root {
+  --card-height: 69px;
+  --card-height-with-border: 68px;
+  --card-height-with-2-border: 67px;
+  --card-width: 180px;
+  --card-padding-left: 10px;
+  --card-padding-right: 10px;
+}
+
+.noBorderHourCardContainer {
+  height: var(--card-height);
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
+.fullHourCardContainer {
+  border: 1px solid black;
+  height: var(--card-height-with-2-border);
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
+
+.topHourCardContainer {
+  border: 1px solid black;
+  border-bottom: none;
+  height: var(--card-height-with-border);
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
+
+.midHourCardContainer {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: var(--card-height);
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
+
+.botHourCardContainer {
+  border: 1px solid black;
+  border-top: none;
+  height: var(--card-height-with-border);
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
+}
