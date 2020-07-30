@@ -9,6 +9,9 @@ import {
   selectAddTaskWeek,
   setAddTaskStartHour,
   setAddTaskEndHour,
+  setEditTaskType,
+  setUpdateDetails,
+  openTaskModalWithNewValues,
 } from "../../features/AddTask/addTaskSlice";
 import {
   selectWeek,
@@ -17,6 +20,8 @@ import {
 } from "../../features/Scheduler/SchedulerSlice";
 
 import { setAddTaskShowModal } from "../../features/AddTask/addTaskSlice";
+import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
+import { Tasks } from "../../../models/Schedule/ScheduleModel";
 
 interface DayCalendarProps {
   label: string;
@@ -31,6 +36,15 @@ export const DayCalendar = (props: DayCalendarProps) => {
   const schedule = useSelector(selectSchedule);
 
   let hourly: JSX.Element[] = [];
+  const cardContent = (task: Tasks, location: string) => {
+    return (
+      <div>
+        <div>+ Click For More Details</div>
+        <div>Task: {task}</div>
+        <div className={styles.noWrap}>Location: {location}</div>
+      </div>
+    );
+  };
 
   let emptySchedule = false;
   const dailySchedule = schedule[currentDriver][currentWeek];
@@ -48,29 +62,63 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 key={props.day + i}
                 position="full"
                 cardOnPress={() => {
-                  console.log("time has been filled 1hour");
+                  dispatch(
+                    openTaskModalWithNewValues({
+                      taskType: "update",
+                      week: currentWeek,
+                      day: props.day,
+                      startHour: i,
+                      endHour: i + 1,
+                      showModal: true,
+                      updateDetails: {
+                        driver: currentDriver,
+                        week: currentWeek,
+                        day: props.day,
+                        startHour: i,
+                      },
+                      location: hourlySchedule[i].location,
+                    })
+                  );
                 }}
               >
-                <div>
-                  <div>+ Click For More Details</div>
-                  <div>Task: {hourlySchedule[i].task}</div>
-                  <div className={styles.noWrap}>
-                    Location: {hourlySchedule[i].location}
-                  </div>
-                </div>
+                {cardContent(
+                  hourlySchedule[i].task,
+                  hourlySchedule[i].location
+                )}
               </HourCard>
             );
           } else {
-            const currentSchedule = hourlySchedule[i];
+            const currStartHour = i;
+            const currentSchedule = hourlySchedule[currStartHour];
+
+            //details required for updates
+            const updateDetails: taskUpdateDetails = {
+              driver: currentDriver,
+              week: currentWeek,
+              day: props.day,
+              startHour: currStartHour,
+            };
+
             hourly.push(
               <HourCard
                 key={props.day + i}
                 position="top"
                 cardOnPress={() => {
-                  console.log("time has been filled");
+                  dispatch(
+                    openTaskModalWithNewValues({
+                      taskType: "update",
+                      week: currentWeek,
+                      day: props.day,
+                      startHour: currStartHour,
+                      endHour: hourlySchedule[currStartHour].endHour,
+                      showModal: true,
+                      updateDetails: updateDetails,
+                      location: hourlySchedule[currStartHour].location,
+                    })
+                  );
                 }}
               >
-                <div>{currentSchedule.task}</div>
+                {cardContent(currentSchedule.task, currentSchedule.location)}
               </HourCard>
             );
             for (let x = i + 1; x < currentSchedule.endHour - 1; x++) {
@@ -79,7 +127,18 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   key={"" + i + x + props.day}
                   position="mid"
                   cardOnPress={() => {
-                    console.log("time has been filled mid");
+                    dispatch(
+                      openTaskModalWithNewValues({
+                        taskType: "update",
+                        week: currentWeek,
+                        day: props.day,
+                        startHour: currStartHour,
+                        endHour: hourlySchedule[currStartHour].endHour,
+                        showModal: true,
+                        updateDetails: updateDetails,
+                        location: hourlySchedule[currStartHour].location,
+                      })
+                    );
                   }}
                 />
               );
@@ -92,7 +151,18 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 key={props.day + i + 1}
                 position="bot"
                 cardOnPress={() => {
-                  console.log("time has been filled bot");
+                  dispatch(
+                    openTaskModalWithNewValues({
+                      taskType: "update",
+                      week: currentWeek,
+                      day: props.day,
+                      startHour: currStartHour,
+                      endHour: hourlySchedule[currStartHour].endHour,
+                      showModal: true,
+                      updateDetails: updateDetails,
+                      location: hourlySchedule[currStartHour].location,
+                    })
+                  );
                 }}
               />
             );
@@ -106,11 +176,17 @@ export const DayCalendar = (props: DayCalendarProps) => {
             <HourCard
               key={i + props.day}
               cardOnPress={() => {
-                dispatch(setAddTaskWeek(currentWeek));
-                dispatch(setAddTaskDay(props.day));
-                dispatch(setAddTaskStartHour(i));
-                dispatch(setAddTaskEndHour(i + 1));
-                dispatch(setAddTaskShowModal(true));
+                dispatch(
+                  openTaskModalWithNewValues({
+                    taskType: "add",
+                    week: currentWeek,
+                    day: props.day,
+                    startHour: i,
+                    endHour: i + 1,
+                    showModal: true,
+                    location: "",
+                  })
+                );
               }}
             />
           );
@@ -124,11 +200,17 @@ export const DayCalendar = (props: DayCalendarProps) => {
         <HourCard
           key={i}
           cardOnPress={() => {
-            dispatch(setAddTaskWeek(currentWeek));
-            dispatch(setAddTaskDay(props.day));
-            dispatch(setAddTaskStartHour(i));
-            dispatch(setAddTaskEndHour(i + 1));
-            dispatch(setAddTaskShowModal(true));
+            dispatch(
+              openTaskModalWithNewValues({
+                taskType: "add",
+                week: currentWeek,
+                day: props.day,
+                startHour: i,
+                endHour: i + 1,
+                showModal: true,
+                location: "",
+              })
+            );
           }}
         />
       );

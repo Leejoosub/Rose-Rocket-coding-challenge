@@ -18,6 +18,8 @@ import {
   selectAddTaskEndHour,
   selectAddTaskTask,
   selectAddTaskLocation,
+  selectEditTaskType,
+  selectUpdateDetails,
 } from "./addTaskSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -37,14 +39,17 @@ import { Tasks } from "../../../models/Schedule/ScheduleModel";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider } from "@material-ui/core";
 import {
+  deleteTask,
   selectDriver,
   updateSchedule,
-  setScheduleConflict,
   selectScheduleConflict,
   selectSchedule,
   overWriteSchedule,
 } from "../Scheduler/SchedulerSlice";
-import { detectConfict } from "../../../HelperFunctions/Scheduler/DetectConflicts";
+import {
+  detectConfict,
+  detectConfictExcludingCurrent,
+} from "../../../HelperFunctions/Scheduler/DetectConflicts";
 
 const theme = createMuiTheme({
   palette: { primary: { main: "#3399ff", contrastText: "#fff" } },
@@ -62,6 +67,8 @@ const AddTask = () => {
   const scheduleConflict = useSelector(selectScheduleConflict);
   const location = useSelector(selectAddTaskLocation);
   const schedule = useSelector(selectSchedule);
+  const editTaskType = useSelector(selectEditTaskType);
+  const updateDetails = useSelector(selectUpdateDetails);
 
   const [conflictWarning, setConflictWarning] = useState(false);
 
@@ -93,7 +100,46 @@ const AddTask = () => {
     } else setConflictWarning(true);
   };
 
+  const handleUpdate = () => {
+    let conflict = false;
+    if (updateDetails) {
+      conflict = detectConfictExcludingCurrent(
+        schedule,
+        selectedDriver,
+        selectedWeek,
+        selectedDay,
+        selectedStartHour,
+        selectedEndHour,
+        updateDetails
+      );
+    }
+    if (!conflict) {
+      if (updateDetails) {
+        dispatch(deleteTask(updateDetails));
+        dispatch(
+          updateSchedule({
+            week: selectedWeek,
+            day: selectedDay,
+            startHour: selectedStartHour,
+            endHour: selectedEndHour,
+            task: selectedTask,
+            location: location,
+          })
+        );
+      }
+      handleCloseModal();
+    } else {
+      setConflictWarning(true);
+    }
+  };
+  const handleDelete = () => {
+    if (updateDetails) dispatch(deleteTask(updateDetails));
+    handleCloseModal();
+  };
+
   const handleOverwrite = () => {
+    if (editTaskType === "update" && updateDetails)
+      dispatch(deleteTask(updateDetails));
     dispatch(
       overWriteSchedule({
         week: selectedWeek,
@@ -108,6 +154,44 @@ const AddTask = () => {
     handleCloseModal();
   };
 
+  let modalButton = (
+    <div className={styles.buttonContainer}>
+      <ThemeProvider theme={theme}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <p>Add New Task</p>
+        </Button>
+      </ThemeProvider>
+    </div>
+  );
+  if (editTaskType === "update") {
+    modalButton = (
+      <div className={styles.buttonContainer}>
+        <ThemeProvider theme={theme}>
+          <div className={styles.flexRow}>
+            <div className={styles.buttonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUpdate}
+              >
+                <p>Update Task</p>
+              </Button>
+            </div>
+            <div className={styles.buttonContainer}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleDelete}
+              >
+                <p>Delete Task</p>
+              </Button>
+            </div>
+          </div>
+        </ThemeProvider>
+      </div>
+    );
+  }
+
   return (
     <Modal
       open={showModal}
@@ -117,7 +201,11 @@ const AddTask = () => {
       className={styles.modal}
     >
       <div className={styles.modalContent}>
-        <h1>Add A New Task!</h1>
+        {editTaskType === "add" ? (
+          <h1>Add A New Task</h1>
+        ) : editTaskType === "update" ? (
+          <h1>Update Task</h1>
+        ) : null}
         <div className={styles.inputColumn}>
           {/* WEEK SELECTOR */}
           <div className={styles.inputs}>
@@ -202,6 +290,7 @@ const AddTask = () => {
             <InputLabel htmlFor="select">Location: </InputLabel>
             <div className={styles.textField}>
               <TextField
+                value={location}
                 onChange={(event) =>
                   dispatch(setAddTaskLocation(event.target.value))
                 }
@@ -209,14 +298,7 @@ const AddTask = () => {
             </div>
           </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <h1>{conflictWarning}</h1>
-          <ThemeProvider theme={theme}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              <p>Add New Task</p>
-            </Button>
-          </ThemeProvider>
-        </div>
+        <div className={styles.buttonContainer}>{modalButton}</div>
         <Modal
           open={conflictWarning}
           onClose={() => setConflictWarning(false)}

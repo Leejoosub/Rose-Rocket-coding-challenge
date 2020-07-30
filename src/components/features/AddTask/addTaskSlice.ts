@@ -3,6 +3,16 @@ import { AppThunk, RootState } from "../../../app/store";
 import { Tasks } from "../../../models/Schedule/ScheduleModel";
 import { useDispatch } from "react-redux";
 import { setScheduleConflict } from "../Scheduler/SchedulerSlice";
+import {
+  editTaskType,
+  taskUpdateDetails,
+} from "../../../models/EditTask/EditTaskModel";
+
+/**********************************************************************
+ * I have changed the functionality of this feature to the edit task feature.
+ * I will change the name later if possilbe, but to save time and avoid running
+ * into errors, I shall leave the name for now
+ ***********************************************************************/
 
 interface AddTaskState {
   week: number;
@@ -12,6 +22,8 @@ interface AddTaskState {
   location: string;
   task: Tasks;
   showModal: boolean;
+  editTaskType: editTaskType;
+  updateDetails: taskUpdateDetails | null;
 }
 
 const initialState: AddTaskState = {
@@ -22,6 +34,8 @@ const initialState: AddTaskState = {
   task: "other",
   showModal: false,
   location: "",
+  editTaskType: "update",
+  updateDetails: null,
 };
 
 export const AddTaskSlice = createSlice({
@@ -55,10 +69,51 @@ export const AddTaskSlice = createSlice({
       state.task = action.payload;
     },
     setAddTaskShowModal: (state, action: PayloadAction<boolean>) => {
+      //if  the modal is closed, reset updateDetails
+      if (action.payload === false) state.updateDetails = null;
       state.showModal = action.payload;
     },
     setAddTaskLocation: (state, action: PayloadAction<string>) => {
       state.location = action.payload;
+    },
+    setEditTaskType: (state, action: PayloadAction<editTaskType>) => {
+      state.editTaskType = action.payload;
+    },
+    setUpdateDetails: (state, action: PayloadAction<taskUpdateDetails>) => {
+      state.updateDetails = action.payload;
+    },
+    openTaskModalWithNewValues: (
+      state,
+      action: PayloadAction<{
+        taskType: editTaskType;
+        week: number;
+        day: number;
+        startHour: number;
+        endHour: number;
+        showModal: boolean;
+        location: string;
+        updateDetails?: taskUpdateDetails;
+      }>
+    ) => {
+      const {
+        taskType,
+        week,
+        day,
+        startHour,
+        endHour,
+        showModal,
+        updateDetails,
+        location
+      } = action.payload;
+      state.editTaskType = taskType;
+      state.week = week;
+      state.day = day;
+      state.startHour = startHour;
+      state.endHour = endHour;
+      state.showModal = showModal;
+      state.location = location;
+      if (taskType === "update" && updateDetails)
+        state.updateDetails = updateDetails;
     },
   },
 });
@@ -72,6 +127,9 @@ export const {
   setAddTaskTask,
   setAddTaskShowModal,
   setAddTaskLocation,
+  setEditTaskType,
+  setUpdateDetails,
+  openTaskModalWithNewValues,
 } = AddTaskSlice.actions;
 
 //getters
@@ -85,5 +143,9 @@ export const selectAddTaskShowModal = (state: RootState) =>
   state.addTask.showModal;
 export const selectAddTaskLocation = (state: RootState) =>
   state.addTask.location;
+export const selectEditTaskType = (state: RootState) =>
+  state.addTask.editTaskType;
+export const selectUpdateDetails = (state: RootState) =>
+  state.addTask.updateDetails;
 
 export default AddTaskSlice.reducer;

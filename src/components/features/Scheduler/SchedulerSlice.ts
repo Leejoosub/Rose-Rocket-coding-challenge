@@ -6,6 +6,7 @@ import {
   Tasks,
 } from "../../../models/Schedule/ScheduleModel";
 import { DRIVER1, DRIVER2, DRIVER3 } from "../../../GlobalVar";
+import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
 
 interface SchedulerState {
   Drivers: DriversMap;
@@ -54,7 +55,6 @@ export const schedulerSlice = createSlice({
         task: Tasks;
         location: string;
         additionalInfo?: string;
-        forceUpdate?: boolean;
       }>
     ) => {
       const driverobj = state.Drivers[state.currentDriver];
@@ -128,28 +128,27 @@ export const schedulerSlice = createSlice({
         task: Tasks;
         location: string;
         additionalInfo?: string;
-        forceUpdate?: boolean;
       }>
     ) => {
-      const dayObj = state.Drivers[state.currentDriver][action.payload.week][
-        action.payload.day
-      ]
+      const dayObj =
+        state.Drivers[state.currentDriver][action.payload.week][
+          action.payload.day
+        ];
       //if we are overwriting, we know something exists at that path so no need for if checks
       //loop through and delete all conflicts
       for (let hour in dayObj) {
         //if there exists another start time as the one we passed in, then conflict
         if (parseInt(hour) === action.payload.startHour) {
-          delete dayObj[hour]
-          
+          delete dayObj[hour];
         } else if (parseInt(hour) < action.payload.startHour) {
           // if there is a start time that starts before the passed in start time
           // and ends after the start time we request, conflict
           if (dayObj[hour].endHour > action.payload.startHour) {
-            delete dayObj[hour]
+            delete dayObj[hour];
           }
           //if there is a start time before our end time, conflict
         } else if (parseInt(hour) < action.payload.endHour) {
-          delete dayObj[hour]
+          delete dayObj[hour];
         }
       }
       //adding new task
@@ -159,6 +158,11 @@ export const schedulerSlice = createSlice({
         location: action.payload.location,
         additionalInfo: "",
       };
+    },
+    deleteTask: (state, action: PayloadAction<taskUpdateDetails>) => {
+      delete state.Drivers[state.currentDriver][action.payload.week][
+        action.payload.day
+      ][action.payload.startHour];
     },
   },
 });
@@ -172,6 +176,7 @@ export const {
   updateSchedule,
   setScheduleConflict,
   overWriteSchedule,
+  deleteTask,
 } = schedulerSlice.actions;
 
 //ADD ALL GET VALUES HERE
