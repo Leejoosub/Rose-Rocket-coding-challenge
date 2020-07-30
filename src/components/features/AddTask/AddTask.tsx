@@ -33,7 +33,15 @@ import Button from "@material-ui/core/Button";
 import { Tasks } from "../../../models/Schedule/ScheduleModel";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider } from "@material-ui/core";
-import { selectDriver, updateSchedule } from "../Scheduler/SchedulerSlice";
+import {
+  selectDriver,
+  updateSchedule,
+  setScheduleConflict,
+  selectScheduleConflict,
+  selectSchedule,
+  overWriteSchedule,
+} from "../Scheduler/SchedulerSlice";
+import { detectConfict } from "../../../HelperFunctions/Scheduler/DetectConflicts";
 
 const theme = createMuiTheme({
   palette: { primary: { main: "#3399ff", contrastText: "#fff" } },
@@ -48,13 +56,41 @@ const AddTask = () => {
   const selectedEndHour = useSelector(selectAddTaskEndHour);
   const selectedDriver = useSelector(selectDriver);
   const selectedTask = useSelector(selectAddTaskTask);
+  const scheduleConflict = useSelector(selectScheduleConflict);
+  const schedule = useSelector(selectSchedule);
+
+  const [conflictWarning, setConflictWarning] = useState(false);
 
   const handleCloseModal = () => {
     dispatch(setAddTaskShowModal(false));
   };
+
   const handleSubmit = () => {
+    const conflict = detectConfict(
+      schedule,
+      selectedDriver,
+      selectedWeek,
+      selectedDay,
+      selectedStartHour,
+      selectedEndHour
+    );
+    if (!conflict) {
+      dispatch(
+        updateSchedule({
+          week: selectedWeek,
+          day: selectedDay,
+          startHour: selectedStartHour,
+          endHour: selectedEndHour,
+          task: selectedTask,
+        })
+      );
+      handleCloseModal();
+    } else setConflictWarning(true);
+  };
+
+  const handleOverwrite = () => {
     dispatch(
-      updateSchedule({
+      overWriteSchedule({
         week: selectedWeek,
         day: selectedDay,
         startHour: selectedStartHour,
@@ -62,7 +98,8 @@ const AddTask = () => {
         task: selectedTask,
       })
     );
-    dispatch(setAddTaskShowModal(false));
+    setConflictWarning(false);
+    handleCloseModal();
   };
 
   return (
@@ -85,6 +122,7 @@ const AddTask = () => {
               value={selectedWeek}
               onChange={(event) => {
                 dispatch(setAddTaskWeek(parseInt(event.target.value)));
+                if (conflictWarning) setConflictWarning(false);
               }}
             >
               {/* helper function to create <option> tags for me */}
@@ -156,12 +194,49 @@ const AddTask = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
+          <h1>{conflictWarning}</h1>
           <ThemeProvider theme={theme}>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               <p>Add New Task</p>
             </Button>
           </ThemeProvider>
         </div>
+        <Modal
+          open={conflictWarning}
+          onClose={() => setConflictWarning(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          className={styles.modal}
+        >
+          <div className={styles.modalContent}>
+            <p>WARNING: Conficting Schedule</p>
+            <p>
+              there is a conflicting schedule. Would you like to overwrite it?
+            </p>
+            <ThemeProvider theme={theme}>
+              <div className={styles.flexRow}>
+                <div className={styles.buttonContainer}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleOverwrite()}
+                  >
+                    <p>Yes! Overwrite</p>
+                  </Button>
+                </div>
+                <div className={styles.buttonContainer}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => setConflictWarning(false)}
+                  >
+                    <p>Cancel</p>
+                  </Button>
+                </div>
+              </div>
+            </ThemeProvider>
+          </div>
+        </Modal>
       </div>
     </Modal>
   );

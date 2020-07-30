@@ -37,8 +37,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
   if (dailySchedule) {
     const hourlySchedule = dailySchedule[props.day];
     if (hourlySchedule) {
-      // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-      // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
+      // jlee when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       for (let i = 0; i < 24; i++) {
         if (hourlySchedule[i]) {
@@ -46,7 +45,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
           if (hourlySchedule[i].endHour === i + 1) {
             hourly.push(
               <HourCard
-                key={i}
+                key={props.day + i}
                 position="full"
                 cardOnPress={() => {
                   console.log("time has been filled 1hour");
@@ -56,12 +55,10 @@ export const DayCalendar = (props: DayCalendarProps) => {
               </HourCard>
             );
           } else {
-            console.log(hourlySchedule[i]);
             const currentSchedule = hourlySchedule[i];
-
             hourly.push(
               <HourCard
-                key={i}
+                key={props.day + i}
                 position="top"
                 cardOnPress={() => {
                   console.log("time has been filled");
@@ -73,7 +70,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
             for (let x = i + 1; x < currentSchedule.endHour - 1; x++) {
               hourly.push(
                 <HourCard
-                  key={i}
+                  key={("" + i + x + props.day)}
                   position="mid"
                   cardOnPress={() => {
                     console.log("time has been filled mid");
@@ -86,7 +83,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
             }
             hourly.push(
               <HourCard
-                key={i}
+                key={props.day + i + 1}
                 position="bot"
                 cardOnPress={() => {
                   console.log("time has been filled bot");
@@ -101,7 +98,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
         } else {
           hourly.push(
             <HourCard
-              key={i}
+              key={i + props.day}
               cardOnPress={() => {
                 dispatch(setAddTaskWeek(currentWeek));
                 dispatch(setAddTaskDay(props.day));
