@@ -42,12 +42,14 @@ import {
   deleteTask,
   selectDriver,
   updateSchedule,
-  setScheduleConflict,
   selectScheduleConflict,
   selectSchedule,
   overWriteSchedule,
 } from "../Scheduler/SchedulerSlice";
-import { detectConfict } from "../../../HelperFunctions/Scheduler/DetectConflicts";
+import {
+  detectConfict,
+  detectConfictExcludingCurrent,
+} from "../../../HelperFunctions/Scheduler/DetectConflicts";
 
 const theme = createMuiTheme({
   palette: { primary: { main: "#3399ff", contrastText: "#fff" } },
@@ -98,13 +100,45 @@ const AddTask = () => {
     } else setConflictWarning(true);
   };
 
-  const handleUpdate = () => {};
+  const handleUpdate = () => {
+    let conflict = false;
+    if (updateDetails) {
+      conflict = detectConfictExcludingCurrent(
+        schedule,
+        selectedDriver,
+        selectedWeek,
+        selectedDay,
+        selectedStartHour,
+        selectedEndHour,
+        updateDetails
+      );
+    }
+    if (!conflict) {
+      if (updateDetails) {
+        dispatch(deleteTask(updateDetails));
+        dispatch(
+          updateSchedule({
+            week: selectedWeek,
+            day: selectedDay,
+            startHour: selectedStartHour,
+            endHour: selectedEndHour,
+            task: selectedTask,
+            location: location,
+          })
+        );
+      }
+      handleCloseModal();
+    } else {
+      setConflictWarning(true);
+    }
+  };
   const handleDelete = () => {
     if (updateDetails) dispatch(deleteTask(updateDetails));
     handleCloseModal();
   };
 
   const handleOverwrite = () => {
+    if (editTaskType === "update" && updateDetails) dispatch(deleteTask(updateDetails));
     dispatch(
       overWriteSchedule({
         week: selectedWeek,
@@ -137,7 +171,7 @@ const AddTask = () => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => handleOverwrite()}
+                onClick={handleUpdate}
               >
                 <p>Update Task</p>
               </Button>
@@ -262,9 +296,7 @@ const AddTask = () => {
             </div>
           </div>
         </div>
-        <div className={styles.buttonContainer}>
-          {modalButton}
-        </div>
+        <div className={styles.buttonContainer}>{modalButton}</div>
         <Modal
           open={conflictWarning}
           onClose={() => setConflictWarning(false)}
