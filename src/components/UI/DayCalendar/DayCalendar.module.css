@@ -22,3 +22,11 @@
 .noWrap {
   white-space: nowrap;
 }
+
+.grey {
+  background-color: grey;
+}
+
+.lightGrey {
+  background-color: rgb(167, 167, 167);
+}

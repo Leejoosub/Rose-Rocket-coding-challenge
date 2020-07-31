@@ -5,6 +5,7 @@ interface HourcardProps {
   children?: JSX.Element;
   position?: "top" | "mid" | "bot" | "full" | "no border" | undefined;
   cardOnPress?: VoidFunction;
+  additionalStyling?: string;
 }
 const HourCard = (props: HourcardProps) => {
   let cardStyle = styles.fullHourCardContainer;
@@ -24,7 +25,11 @@ const HourCard = (props: HourcardProps) => {
 
   return (
     <div
-      className={[cardStyle, styles.cardContainer].join(" ")}
+      className={[
+        cardStyle,
+        styles.cardContainer,
+        props.additionalStyling ? props.additionalStyling : null,
+      ].join(" ")}
       onClick={props.cardOnPress}
     >
       {props.children ? props.children : <div />}

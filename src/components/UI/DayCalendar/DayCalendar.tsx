@@ -183,6 +183,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   })
                 );
               }}
+              additionalStyling={i%2 === 0 ? styles.grey : styles.lightGrey}
             />
           );
         }
@@ -208,6 +209,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               })
             );
           }}
+          additionalStyling={i%2 === 0 ? styles.grey : styles.lightGrey}
         />
       );
     }
