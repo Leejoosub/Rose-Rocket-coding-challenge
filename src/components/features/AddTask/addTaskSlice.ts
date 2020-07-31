@@ -85,34 +85,37 @@ export const AddTaskSlice = createSlice({
     openTaskModalWithNewValues: (
       state,
       action: PayloadAction<{
-        taskType: editTaskType;
+        modalTaskType: editTaskType;
         week: number;
         day: number;
         startHour: number;
         endHour: number;
         showModal: boolean;
         location: string;
+        task: Tasks;
         updateDetails?: taskUpdateDetails;
       }>
     ) => {
       const {
-        taskType,
+        modalTaskType,
         week,
         day,
         startHour,
         endHour,
         showModal,
         updateDetails,
-        location
+        location,
+        task,
       } = action.payload;
-      state.editTaskType = taskType;
+      state.editTaskType = modalTaskType;
       state.week = week;
       state.day = day;
       state.startHour = startHour;
       state.endHour = endHour;
       state.showModal = showModal;
       state.location = location;
-      if (taskType === "update" && updateDetails)
+      state.task = task;
+      if (modalTaskType === "update" && updateDetails)
         state.updateDetails = updateDetails;
     },
   },
