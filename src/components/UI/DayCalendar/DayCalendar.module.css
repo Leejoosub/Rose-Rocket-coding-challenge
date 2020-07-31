@@ -30,3 +30,14 @@
 .lightGrey {
   background-color: rgb(167, 167, 167);
 }
+
+.taskBackgroundColor1 {
+  background-color: lightblue;
+}
+
+.taskBackgroundColor2 {
+  background-color: lightgreen;
+}
+.taskBackgroundColor3 {
+  background-color: lightcoral;
+}

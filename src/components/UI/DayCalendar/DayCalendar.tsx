@@ -46,11 +46,25 @@ export const DayCalendar = (props: DayCalendarProps) => {
       for (let i = 0; i < 24; i++) {
         if (hourlySchedule[i]) {
           //if its just a 1 hour schedule
+          let backgrouncColor = styles.taskBackgroundColor1;
+          switch (hourlySchedule[i].task) {
+            case "dropoff":
+              backgrouncColor = styles.taskBackgroundColor1;
+              break;
+            case "other":
+              backgrouncColor = styles.taskBackgroundColor2;
+              break;
+            case "pickup":
+              backgrouncColor = styles.taskBackgroundColor3;
+              break;
+          }
+
           if (hourlySchedule[i].endHour === i + 1) {
             hourly.push(
               <HourCard
                 key={props.day + i}
                 position="full"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -94,6 +108,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               <HourCard
                 key={props.day + i}
                 position="top"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -118,6 +133,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 <HourCard
                   key={"" + i + x + props.day}
                   position="mid"
+                  additionalStyling={backgrouncColor}
                   cardOnPress={() => {
                     dispatch(
                       openTaskModalWithNewValues({
@@ -143,6 +159,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               <HourCard
                 key={props.day + i + 1}
                 position="bot"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -183,7 +200,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   })
                 );
               }}
-              additionalStyling={i%2 === 0 ? styles.grey : styles.lightGrey}
+              additionalStyling={i % 2 === 0 ? styles.grey : styles.lightGrey}
             />
           );
         }
@@ -209,7 +226,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               })
             );
           }}
-          additionalStyling={i%2 === 0 ? styles.grey : styles.lightGrey}
+          additionalStyling={i % 2 === 0 ? styles.grey : styles.lightGrey}
         />
       );
     }
