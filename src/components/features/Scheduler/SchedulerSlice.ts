@@ -185,5 +185,7 @@ export const selectDriver = (state: RootState) => state.scheduler.currentDriver;
 export const selectSchedule = (state: RootState) => state.scheduler.Drivers;
 export const selectScheduleConflict = (state: RootState) =>
   state.scheduler.scheduleConflict;
+export const selectDownloadScheduleLength = (state: RootState) =>
+  state.scheduler.downloadScheduleLength;
 
 export default schedulerSlice.reducer;
