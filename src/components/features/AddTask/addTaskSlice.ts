@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../../app/store";
+import { RootState } from "../../../app/store";
 import { Tasks } from "../../../models/Schedule/ScheduleModel";
-import { useDispatch } from "react-redux";
-import { setScheduleConflict } from "../Scheduler/SchedulerSlice";
 import {
   editTaskType,
   taskUpdateDetails,

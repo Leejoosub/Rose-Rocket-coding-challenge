@@ -42,7 +42,6 @@ import {
   deleteTask,
   selectDriver,
   updateSchedule,
-  selectScheduleConflict,
   selectSchedule,
   overWriteSchedule,
 } from "../Scheduler/SchedulerSlice";
@@ -64,7 +63,6 @@ const AddTask = () => {
   const selectedEndHour = useSelector(selectAddTaskEndHour);
   const selectedDriver = useSelector(selectDriver);
   const selectedTask = useSelector(selectAddTaskTask);
-  const scheduleConflict = useSelector(selectScheduleConflict);
   const location = useSelector(selectAddTaskLocation);
   const schedule = useSelector(selectSchedule);
   const editTaskType = useSelector(selectEditTaskType);

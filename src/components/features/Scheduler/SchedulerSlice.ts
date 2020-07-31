@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../../app/store";
-import {
-  DriversMap,
-  TaskDetails,
-  Tasks,
-} from "../../../models/Schedule/ScheduleModel";
+import { RootState } from "../../../app/store";
+import { DriversMap, Tasks } from "../../../models/Schedule/ScheduleModel";
 import { DRIVER1, DRIVER2, DRIVER3 } from "../../../GlobalVar";
 import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
 
