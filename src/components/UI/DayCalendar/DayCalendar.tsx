@@ -219,12 +219,6 @@ export const DayCalendar = (props: DayCalendarProps) => {
         <p>
           <strong>{props.label}</strong>
         </p>
-        <Button
-          variant="contained"
-          onClick={() => {
-            console.log("add task");
-          }}
-        >{` + Add Task`}</Button>
       </div>
 
       <div className={styles.contentContainer}>{hourly}</div>
