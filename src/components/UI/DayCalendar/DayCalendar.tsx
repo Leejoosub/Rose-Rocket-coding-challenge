@@ -3,23 +3,13 @@ import styles from "./DayCalendar.module.css";
 import Button from "@material-ui/core/Button";
 import HourCard from "../HourCard/HourCard/HourCard";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setAddTaskWeek,
-  setAddTaskDay,
-  selectAddTaskWeek,
-  setAddTaskStartHour,
-  setAddTaskEndHour,
-  setEditTaskType,
-  setUpdateDetails,
-  openTaskModalWithNewValues,
-} from "../../features/AddTask/addTaskSlice";
+import { openTaskModalWithNewValues } from "../../features/AddTask/addTaskSlice";
 import {
   selectWeek,
   selectDriver,
   selectSchedule,
 } from "../../features/Scheduler/SchedulerSlice";
 
-import { setAddTaskShowModal } from "../../features/AddTask/addTaskSlice";
 import { taskUpdateDetails } from "../../../models/EditTask/EditTaskModel";
 import { Tasks } from "../../../models/Schedule/ScheduleModel";
 
