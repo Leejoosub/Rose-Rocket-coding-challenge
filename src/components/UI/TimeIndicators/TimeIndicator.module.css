@@ -1,14 +1,18 @@
 .dayContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
 }
 
 .dayLabel {
   position: absolute;
-  width: 100%;
-  background-color: white;
+  top: 0;
+  border: 1px solid black;
+  height: 100px;
+  width: var(--card-width);
+  padding-left: var(--card-padding-left);
+  padding-right: var(--card-padding-right);
 }
 
 .contentContainer{

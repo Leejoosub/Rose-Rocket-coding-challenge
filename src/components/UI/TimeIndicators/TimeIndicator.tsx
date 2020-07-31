@@ -16,7 +16,9 @@ const TimeIndicator = () => {
   return (
     <div className={styles.dayContainer}>
       <div className={styles.dayLabel}>
-        <HourCard position="no border" />
+        <p>
+          <strong>Time</strong>
+        </p>
       </div>
       <div className={styles.contentContainer}>{hourly}</div>
     </div>

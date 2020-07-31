@@ -41,16 +41,28 @@ export const DayCalendar = (props: DayCalendarProps) => {
   if (dailySchedule) {
     const hourlySchedule = dailySchedule[props.day];
     if (hourlySchedule) {
-      // jlee when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-      // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       for (let i = 0; i < 24; i++) {
         if (hourlySchedule[i]) {
+          let backgrouncColor = styles.taskBackgroundColor1;
+          switch (hourlySchedule[i].task) {
+            case "dropoff":
+              backgrouncColor = styles.taskBackgroundColor1;
+              break;
+            case "other":
+              backgrouncColor = styles.taskBackgroundColor2;
+              break;
+            case "pickup":
+              backgrouncColor = styles.taskBackgroundColor3;
+              break;
+          }
+
           //if its just a 1 hour schedule
           if (hourlySchedule[i].endHour === i + 1) {
             hourly.push(
               <HourCard
                 key={props.day + i}
                 position="full"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -94,6 +106,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               <HourCard
                 key={props.day + i}
                 position="top"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -118,6 +131,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 <HourCard
                   key={"" + i + x + props.day}
                   position="mid"
+                  additionalStyling={backgrouncColor}
                   cardOnPress={() => {
                     dispatch(
                       openTaskModalWithNewValues({
@@ -143,6 +157,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               <HourCard
                 key={props.day + i + 1}
                 position="bot"
+                additionalStyling={backgrouncColor}
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
@@ -183,6 +198,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   })
                 );
               }}
+              additionalStyling={i % 2 === 0 ? styles.grey : styles.lightGrey}
             />
           );
         }
@@ -208,6 +224,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               })
             );
           }}
+          additionalStyling={i % 2 === 0 ? styles.grey : styles.lightGrey}
         />
       );
     }

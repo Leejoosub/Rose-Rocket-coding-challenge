@@ -1,12 +1,13 @@
-
 .topMenu {
   display: flex;
-  flex-direction: row;;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  margin: 15px;
 }
 
-.pickerContainer{
+.pickerContainer {
   display: flex;
   align-items: center;
 }
@@ -18,4 +19,10 @@
 .icon {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .topMenu {
+    flex-direction: column;
+  }
 }
