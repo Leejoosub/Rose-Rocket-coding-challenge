@@ -41,11 +41,8 @@ export const DayCalendar = (props: DayCalendarProps) => {
   if (dailySchedule) {
     const hourlySchedule = dailySchedule[props.day];
     if (hourlySchedule) {
-      // jlee when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
-      // when I start doing the actual functionality, add 10 colors that look nice, and randomize those colors for backgrounds
       for (let i = 0; i < 24; i++) {
         if (hourlySchedule[i]) {
-          //if its just a 1 hour schedule
           let backgrouncColor = styles.taskBackgroundColor1;
           switch (hourlySchedule[i].task) {
             case "dropoff":
@@ -59,6 +56,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
               break;
           }
 
+          //if its just a 1 hour schedule
           if (hourlySchedule[i].endHour === i + 1) {
             hourly.push(
               <HourCard
