@@ -64,7 +64,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
-                      taskType: "update",
+                      modalTaskType: "update",
                       week: currentWeek,
                       day: props.day,
                       startHour: i,
@@ -76,6 +76,7 @@ export const DayCalendar = (props: DayCalendarProps) => {
                         day: props.day,
                         startHour: i,
                       },
+                      task: hourlySchedule[i].task,
                       location: hourlySchedule[i].location,
                     })
                   );
@@ -106,13 +107,14 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
-                      taskType: "update",
+                      modalTaskType: "update",
                       week: currentWeek,
                       day: props.day,
                       startHour: currStartHour,
                       endHour: hourlySchedule[currStartHour].endHour,
                       showModal: true,
                       updateDetails: updateDetails,
+                      task: hourlySchedule[currStartHour].task,
                       location: hourlySchedule[currStartHour].location,
                     })
                   );
@@ -129,13 +131,14 @@ export const DayCalendar = (props: DayCalendarProps) => {
                   cardOnPress={() => {
                     dispatch(
                       openTaskModalWithNewValues({
-                        taskType: "update",
+                        modalTaskType: "update",
                         week: currentWeek,
                         day: props.day,
                         startHour: currStartHour,
                         endHour: hourlySchedule[currStartHour].endHour,
                         showModal: true,
                         updateDetails: updateDetails,
+                        task: hourlySchedule[currStartHour].task,
                         location: hourlySchedule[currStartHour].location,
                       })
                     );
@@ -153,13 +156,14 @@ export const DayCalendar = (props: DayCalendarProps) => {
                 cardOnPress={() => {
                   dispatch(
                     openTaskModalWithNewValues({
-                      taskType: "update",
+                      modalTaskType: "update",
                       week: currentWeek,
                       day: props.day,
                       startHour: currStartHour,
                       endHour: hourlySchedule[currStartHour].endHour,
                       showModal: true,
                       updateDetails: updateDetails,
+                      task: hourlySchedule[currStartHour].task,
                       location: hourlySchedule[currStartHour].location,
                     })
                   );
@@ -178,12 +182,13 @@ export const DayCalendar = (props: DayCalendarProps) => {
               cardOnPress={() => {
                 dispatch(
                   openTaskModalWithNewValues({
-                    taskType: "add",
+                    modalTaskType: "add",
                     week: currentWeek,
                     day: props.day,
                     startHour: i,
                     endHour: i + 1,
                     showModal: true,
+                    task: "other",
                     location: "",
                   })
                 );
@@ -202,12 +207,13 @@ export const DayCalendar = (props: DayCalendarProps) => {
           cardOnPress={() => {
             dispatch(
               openTaskModalWithNewValues({
-                taskType: "add",
+                modalTaskType: "add",
                 week: currentWeek,
                 day: props.day,
                 startHour: i,
                 endHour: i + 1,
                 showModal: true,
+                task: "other",
                 location: "",
               })
             );
