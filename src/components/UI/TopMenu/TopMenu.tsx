@@ -134,7 +134,7 @@ export const TopMenu = () => {
           <option value={4}>4 Days</option>
           <option value={7}>7 Days</option>
           <option value={14}>14 Days</option>
-          <option value={27}>27 Days</option>
+          <option value={28}>28 Days</option>
         </NativeSelect>
       </div>
     </div>
